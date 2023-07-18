@@ -54,12 +54,12 @@ end
 |-|-|-|
 | id(PK) | integer | null: false |
 | order(FK) | references | null: false , foreign_key: true|
-| postcode | integer | null: false |
+| postcode | string | null: false |
 | prefecture_id | integer | null: false |
 | city | string | null: false |
 | block | integer | null: false |
-| building | string | null: false |
-| phone-number | integer | null: false |
+| building | string |  |
+| phone_number | string | null: false |
 
 ### Association
 - belongs_to :order
