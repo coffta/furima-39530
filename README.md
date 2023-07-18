@@ -12,15 +12,17 @@
 | first_name_kana | string | null: false |
 | date_of_birth | date | null: false |
 
+
 ### Association
 - has_many :items
+- has_many :orders
 
 ## itemsテーブル
 | Column | Type | Option |
 |-|-|-|
 | id(PK) | integer | null: false |
 | name | string | null: false |
-| descritption | text | null: false |
+| description | text | null: false |
 | price | integer | null: false |
 | category_id | integer | null: false |
 | condition_id | integer | null: false |
@@ -31,3 +33,33 @@
 
 ### Association
 - belongs_to :user
+- has_one :order
+
+## ordersテーブル
+| Column | Type | Option |
+|-|-|-|
+| id(PK) | integer | null: false |
+| user（FK) | references | null: false, foreign_key: true |
+| item（FK) | references | null: false, foreign_key: true |
+
+end
+### Association
+- belongs_to :user
+- belongs_to :item
+- has_one :payment
+
+
+## paymentsテーブル
+| Column | Type | Option |
+|-|-|-|
+| id(PK) | integer | null: false |
+| order(FK) | references | null: false , foreign_key: true|
+| postcode | string | null: false |
+| prefecture_id | integer | null: false |
+| city | string | null: false |
+| block | string | null: false |
+| building | string |  |
+| phone_number | string | null: false |
+
+### Association
+- belongs_to :order
