@@ -126,4 +126,11 @@
     <% end %>
   </div>
 </div>
+
+<div class='error-messages'>
+  <% if flash[:error] %>
+    <p class='error'><%= flash[:error] %></p>
+  <% end %>
+</div>
+
 <%= render "shared/second-footer"%>
