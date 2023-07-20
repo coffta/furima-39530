@@ -4,6 +4,7 @@ class OrdersController < ApplicationController
   end
 
   def create
+    binding.pry
     @order_form = OrderForm.new(order_params)
     if @order_form.save
       # 保存が成功した場合の処理
