@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_20_022258) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_21_001830) do
   create_table "active_storage_attachments", charset: "utf8", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -55,6 +55,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_20_022258) do
   end
 
   create_table "orders", charset: "utf8", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "item_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["item_id"], name: "index_orders_on_item_id"
+    t.index ["user_id"], name: "index_orders_on_user_id"
+  end
+
+  create_table "payments", charset: "utf8", force: :cascade do |t|
     t.string "postcode"
     t.integer "prefecture_id"
     t.string "city"
@@ -62,11 +71,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_20_022258) do
     t.string "building"
     t.string "phone_number"
     t.bigint "user_id"
-    t.bigint "item_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["item_id"], name: "index_orders_on_item_id"
-    t.index ["user_id"], name: "index_orders_on_user_id"
+    t.index ["user_id"], name: "index_payments_on_user_id"
   end
 
   create_table "shipping_addresses", charset: "utf8", force: :cascade do |t|
@@ -97,4 +104,5 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_20_022258) do
   add_foreign_key "items", "users"
   add_foreign_key "orders", "items"
   add_foreign_key "orders", "users"
+  add_foreign_key "payments", "users"
 end
