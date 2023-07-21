@@ -1,6 +1,6 @@
 class Item < ApplicationRecord
+    # テーブルとのアソシエーション
   belongs_to :user
-  has_one_attached :image
   has_one :order
 
   extend ActiveHash::Associations::ActiveRecordExtensions
@@ -10,11 +10,20 @@ class Item < ApplicationRecord
   belongs_to :prefecture
   belongs_to :shipping_date
 
+  # active_storageとのアソシエーション
+  # （items・active_storage_blobsテーブルを関連付け）
+  has_one_attached :image
+
   with_options presence: true do
     validates :name
     validates :description
-    validates :price
     validates :image
+    validates :user_id
+    validates :category_id
+    validates :condition_id
+    validates :shipping_charge_id
+    validates :prefecture_id
+    validates :shipping_date_id
   end
 
   validates :price, numericality: { only_integer: true, message: 'is invalid. Input half-width characters' }
