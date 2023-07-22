@@ -14,6 +14,8 @@ class OrdersController < ApplicationController
       @order_form.save
       redirect_to root_path
     else
+      # エラーメッセージをログに出力
+      Rails.logger.error(@order_form.errors.full_messages)
       render :index
     end
   end
@@ -21,7 +23,7 @@ class OrdersController < ApplicationController
   private
 
   def order_params
-    params.require(:order_form).permit(:postcode, :prefecture_id, :city, :block, :building, :phone_number).merge(user_id: current_user.id, item_id: params[:item_id])
+    params.require(:order_form).permit(:postal_code, :prefecture, :city, :block, :building, :phone_numbers).merge(user_id: current_user.id, item_id: params[:item_id])
   end
 
 end
