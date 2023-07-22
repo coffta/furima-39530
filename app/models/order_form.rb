@@ -17,6 +17,8 @@ class OrderForm
   
   def save
     order = Order.create(user_id: user_id, item_id: item_id)
+    # orderオブジェクトからorder_idを取得して@order_formにセット
+    self.order_id = order.id
     # ストロングパラメーターでデータが運ばれ、それらが保存のタイミングで「order_id」が生成され、保存される。
     Payment.create(order_id: order_id, postal_code: postal_code, prefecture: prefecture, city: city, block: block, building: building, phone_number: phone_number)
   end
