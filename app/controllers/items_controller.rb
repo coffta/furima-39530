@@ -4,7 +4,7 @@ class ItemsController < ApplicationController
   before_action :redirect_to_show, only: [:edit, :update, :destroy]
 
   def index
-    @items = Item.all.order(created_at: :desc)
+    @items = Item.includes(:order).order(created_at: :desc)
   end
 
   def new
@@ -20,12 +20,12 @@ class ItemsController < ApplicationController
     end
   end
 
-  def show
+  def show 
   end
 
   def edit
     # ログインしているユーザーと同一であればeditファイルが読み込まれる
-    if @item.user_id == current_user.id && @item.order.nil?
+    if @item.user == current_user && @item.order.nil?
     else
       redirect_to root_path
     end
