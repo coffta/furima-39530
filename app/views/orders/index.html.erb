@@ -1,3 +1,4 @@
+<%= include_gon %>
 <%= render "shared/second-header"%>
 
 <% if @order_form.errors.any? %>
@@ -9,6 +10,11 @@
     </ul>
   </div>
 <% end %>
+
+<script>
+  const publicKey = "<%= j @public_key %>";
+  // ここでpublicKeyを使ってJavaScriptの処理を行う
+</script>
 
 <div class='transaction-contents'>
   <div class='transaction-main'>
