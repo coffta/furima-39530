@@ -22,7 +22,7 @@ class OrdersController < ApplicationController
   def create
     @item = Item.find(params[:item_id])
     @order_form = OrderForm.new(order_params)
-    if @order_form.valid?s
+    if @order_form.valid?
       pay_item
       @order_form.save
       redirect_to root_path
