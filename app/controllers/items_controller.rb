@@ -4,7 +4,7 @@ class ItemsController < ApplicationController
   before_action :redirect_to_show, only: [:edit, :update, :destroy]
 
   def index
-    @items = Item.all.order(created_at: :desc)
+    @items = Item.includes(:order).order(created_at: :desc)
   end
 
   def new
@@ -13,15 +13,22 @@ class ItemsController < ApplicationController
 
   def create
     @item = Item.new(item_params)
-    return redirect_to root_path if @item.save
-
-    render 'new', status: :unprocessable_entity
+    if @item.save
+      redirect_to root_path
+    else
+      render :new
+    end
   end
 
-  def show
+  def show 
   end
 
   def edit
+    # ログインしているユーザーと同一であればeditファイルが読み込まれる
+    if @item.user == current_user && @item.order.nil?
+    else
+      redirect_to root_path
+    end
   end
 
   def update

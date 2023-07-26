@@ -1,4 +1,20 @@
+<%= include_gon %>
 <%= render "shared/second-header"%>
+
+<% if @order_form.errors.any? %>
+  <div class="alert alert-danger">
+    <ul>
+      <% @order_form.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<script>
+  const publicKey = "<%= j @public_key %>";
+  // ここでpublicKeyを使ってJavaScriptの処理を行う
+</script>
 
 <div class='transaction-contents'>
   <div class='transaction-main'>
@@ -31,7 +47,8 @@
     </div>
     <%# //支払額の表示 %>
 
-    <%= form_with model: , url: , id: 'charge-form', class: 'transaction-form-wrap',local: true do |f| %>
+    <%= form_with model: @order_form, url: item_orders_path, id: 'charge-form', class: 'transaction-form-wrap', local: true do |f| %>
+
     <%= render 'shared/error_messages', model: f.object %>
     <%# カード情報の入力 %>
     <div class='credit-card-form'>
@@ -45,8 +62,8 @@
         </div>
         <div id="number-form" class="input-default"></div>
         <div class='available-card'>
-          <%= image_tag 'card_visa.gif', class: 'card-logo'%>
-          <%= image_tag 'card_mastercard.gif', class: 'card-logo'%>
+          <%= image_tag 'card-visa.gif', class: 'card-logo'%>
+          <%= image_tag 'card-mastercard.gif', class: 'card-logo'%>
           <%= image_tag 'card-jcb.gif', class: 'card-logo'%>
           <%= image_tag 'card-amex.gif', class: 'card-logo'%>
         </div>
@@ -101,7 +118,7 @@
           <label class="form-text">番地</label>
           <span class="indispensable">必須</span>
         </div>
-        <%= f.text_field :addresses, class:"input-default", id:"addresses", placeholder:"例）青山1-1-1"%>
+        <%= f.text_field :block, class:"input-default", id:"block", placeholder:"例）青山1-1-1"%>
       </div>
       <div class="form-group">
         <div class='form-text-wrap'>
@@ -125,4 +142,11 @@
     <% end %>
   </div>
 </div>
+
+<div class='error-messages'>
+  <% if flash[:error] %>
+    <p class='error'><%= flash[:error] %></p>
+  <% end %>
+</div>
+
 <%= render "shared/second-footer"%>

@@ -8,11 +8,13 @@
     </h2>
     <div class='item-img-content'>
       <%= image_tag @item.image ,class:"item-box-img" %>
-      <%# 購入済みの場合、条件分岐 %>
+      <%# 購入済みの場合、soldoutを表示 %>
+      <% if @item.order.present? %>
         <div class='sold-out'>
           <span>Sold Out!!</span>
         </div>
-      <%# //購入済みの場合、条件分岐 %>
+      <% end %>
+      <%# //購入済みの場合、soldoutを表示 %>
     </div>
     <div class="item-price-box">
       <span class="item-price">
@@ -22,13 +24,18 @@
         <%= @item.shipping_charge.charge %>
       </span>
     </div>
-    <%# ログインしている、かつ、購入済みの場合、条件分岐 %>
+    <%# ログインしている、かつ、購入済みでない場合、条件分岐 %>
+    <% if user_signed_in? && @item.order.nil? %> 
       <%# ログインユーザーと出品者が同一の場合、条件分岐 %>
+      <% if current_user.id == @item.user_id %> 
         <%= link_to '商品の編集', edit_item_path(@item), method: :get, class: "item-red-btn" %>
         <p class='or-text'>or</p>
         <%= link_to '削除', item_path(@item), method: :delete, data: {turbo_method: :delete}, class:'item-destroy' %>
       <%# そうでない場合、条件分岐 %>
-        <%= link_to '購入画面に進む', "#", class:"item-red-btn"%>
+      <% else %>
+        <%= link_to '購入画面に進む',  item_orders_path(@item), data: { turbo: false }, class:"item-red-btn"%>
+      <% end %>
+    <% end %>
       <%# //ログインユーザーと出品者が同一の場合、条件分岐 %>
     <%# //ログインしている、かつ、購入済みの場合、条件分岐 %>
     <div class="item-explain-box">
