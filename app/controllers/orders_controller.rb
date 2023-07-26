@@ -1,26 +1,18 @@
 class OrdersController < ApplicationController
   before_action :authenticate_user!
   before_action :set_public_key, only: [:index, :create]
-  
+  before_action :item_find, only: [:index, :create]
   
   def index
     @order_form = OrderForm.new
-    @item = Item.find(params[:item_id])
-     # ログイン状態で出品者が自身が出品した商品の注文ページに遷移しようとすると、トップページに遷移する
-    if @item.user == current_user
-      redirect_to root_path
-      return
-    end
-
-     # ログイン状態で自身が出品していない売却済み商品の注文ページに遷移しようとすると、トップページに遷移する
-    if @item.order && @item.user != current_user
+    # ログイン状態で出品者が自身が出品した商品の注文ページに遷移しようとするか、自身が出品していない売却済み商品の注文ページに遷移しようとする場合は、トップページに遷移する
+    if (@item.user == current_user) || (@item.order && @item.user != current_user)
       redirect_to root_path
       return
     end
   end
 
   def create
-    @item = Item.find(params[:item_id])
     @order_form = OrderForm.new(order_params)
     if @order_form.valid?
       pay_item
@@ -50,5 +42,9 @@ class OrdersController < ApplicationController
 
   def set_public_key
     gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
+  end
+
+  def item_find
+    @item = Item.find(params[:item_id])
   end
 end
