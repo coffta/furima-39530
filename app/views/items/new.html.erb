@@ -5,7 +5,7 @@
   </header>
   <div class="items-sell-main">
     <h2 class="items-sell-title">商品の情報を入力</h2>
-    <%= form_with model: @item , local: true do |f| %>
+    <%= form_with model: @item , local: true, data: { type: :json } do |f| %>
     <%= render 'shared/error_messages', model: f.object %>
     <%# 商品画像 %>
     <div class="img-upload">
@@ -133,6 +133,16 @@
       </p>
     </div>
     <%# //注意書き %>
+
+    <% if @item.errors.any? %>
+     <div id="error_explanation" class="alert alert-danger">
+       <ul>
+         <% @item.errors.full_messages.each do |message| %>
+           <li><%= message %></li>
+         <% end %>
+       </ul>
+     </div>
+    <% end %>
 
     <%# 下部ボタン %>
     <div class="sell-btn-contents">
