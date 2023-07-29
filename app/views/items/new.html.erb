@@ -134,15 +134,16 @@
     </div>
     <%# //注意書き %>
 
-    <% if @item.errors.any? %>
-     <div id="error_explanation" class="alert alert-danger">
-       <ul>
-         <% @item.errors.full_messages.each do |message| %>
-           <li><%= message %></li>
-         <% end %>
-       </ul>
-     </div>
-    <% end %>
+    <%# エラーメッセージの表示 %>
+  <% if @item.errors.any? %>
+    <div id="error_explanation" class="alert alert-danger">
+      <ul>
+        <% @item.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
 
     <%# 下部ボタン %>
     <div class="sell-btn-contents">
