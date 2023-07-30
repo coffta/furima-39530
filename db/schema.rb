@@ -55,16 +55,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_20_134758) do
   end
 
   create_table "orders", charset: "utf8", force: :cascade do |t|
-    t.bigint "user_id"
-    t.bigint "item_id"
+    t.bigint "user_id", null: false
+    t.bigint "item_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "phone_number"
-    t.string "building"
-    t.string "block"
-    t.string "city"
-    t.integer "prefecture_id"
-    t.string "postcode"
     t.index ["item_id"], name: "index_orders_on_item_id"
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
