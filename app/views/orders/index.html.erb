@@ -1,16 +1,6 @@
 <%= include_gon %>
 <%= render "shared/second-header"%>
 
-<% if @order_form.errors.any? %>
-  <div class="alert alert-danger">
-    <ul>
-      <% @order_form.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-    </ul>
-  </div>
-<% end %>
-
 <script>
   const publicKey = "<%= j @public_key %>";
   // ここでpublicKeyを使ってJavaScriptの処理を行う
@@ -47,9 +37,9 @@
     </div>
     <%# //支払額の表示 %>
 
-    <%= form_with model: @order_form, url: item_orders_path, id: 'charge-form', class: 'transaction-form-wrap', local: true do |f| %>
-
+    <%= form_with model: @order_form, url: item_orders_path, local: true, data: { turbo: false } do |f| %>
     <%= render 'shared/error_messages', model: f.object %>
+
     <%# カード情報の入力 %>
     <div class='credit-card-form'>
       <h1 class='info-input-haedline'>
@@ -141,12 +131,6 @@
     </div>
     <% end %>
   </div>
-</div>
-
-<div class='error-messages'>
-  <% if flash[:error] %>
-    <p class='error'><%= flash[:error] %></p>
-  <% end %>
 </div>
 
 <%= render "shared/second-footer"%>

@@ -26,7 +26,7 @@ class Item < ApplicationRecord
     validates :shipping_date_id ,presence: true
   end
 
-  validates :price ,presence: true, numericality: { only_integer: true, message: 'is invalid. Input half-width characters' }
+  validates :price ,numericality: { only_integer: true, message: 'is invalid. Input half-width characters' }
   validates :price ,presence: true,
             numericality: { greater_than_or_equal_to: 300, less_than_or_equal_to: 9_999_999, message: 'is out of setting range' }
 
